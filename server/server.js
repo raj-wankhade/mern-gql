@@ -6,42 +6,16 @@ import { ApolloServer } from "apollo-server-express";
 import dotenv from "dotenv";
 dotenv.config();
 
+import typeDefs from "./typeDefs/index.js";
+import resolvers from "./resolvers/index.js";
+
 const app = express();
-
-const books = [
-  {
-    title: "The Awakening",
-    author: "Kate Chopin",
-  },
-  {
-    title: "City of Glass",
-    author: "Paul Auster",
-  },
-];
-
-const typeDefs = `#gql
-    type Book {
-        title: String
-        author: String
-    }
-
-    type Query {
-        books: [Book]
-    }
-`;
-
-const resolvers = {
-  Query: {
-    books: () => books,
-  },
-};
 
 const apolloServer = new ApolloServer({ typeDefs, resolvers });
 await apolloServer.start();
 
 // apply express middlware to apolloServer
 // applyMiddleware server connects ApolloServer to HTTP Framework i;e express
-
 apolloServer.applyMiddleware({ app });
 
 app.get("/", function (req, res) {
