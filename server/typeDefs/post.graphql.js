@@ -2,7 +2,7 @@ const post = `#gql
 
     type Post {
         id: Int!
-        author: [Author]
+        authorId: Author
         title: String
         votes: Int
     }
@@ -13,13 +13,20 @@ const post = `#gql
         totalPosts: Int!
     }
 
+    #Input types
+    input InputPost {
+        authorId: Int
+        title: String
+        votes: Int
+    }
+
     #Mutations
     type Mutation {
-        newPost(author: Int!, title: String, votes: Int): Post!
+        newPost(input: InputPost): Post!
     }
     # to run the query in playground
     # mutation {
-    #    newPost(author:3,title: "some new title", votes: 3){
+    #    newPost(authorId:3,title: "some new title", votes: 3){
     #        id
     #        title
     #    }

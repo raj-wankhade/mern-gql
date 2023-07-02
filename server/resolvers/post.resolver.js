@@ -13,10 +13,11 @@ const totalPosts = () => posts.length;
 // parent or _
 const newPost = (parent, args) => {
   console.log("args are", args);
+  args = args.input;
   // create a new post object
   const post = {
     id: posts.length++,
-    authorId: authors.find((author) => author.id === args.author),
+    authorId: authors.find((author) => author.id === args.authorId),
     title: args.title,
     votes: args.votes,
   };
