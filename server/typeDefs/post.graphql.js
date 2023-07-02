@@ -2,7 +2,7 @@ const post = `#gql
 
     type Post {
         id: Int!
-        authorId: Author
+        author: Author
         title: String
         votes: Int
     }
