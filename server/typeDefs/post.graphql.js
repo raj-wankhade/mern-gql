@@ -1,6 +1,6 @@
 const post = `#gql
 
-    type Post{
+    type Post {
         id: Int!
         title: String
         author: String
@@ -10,6 +10,7 @@ const post = `#gql
     # the schema allows the following query:
     type Query {
         posts: [Post]
+        totalPosts: Int!
     }
 `;
 

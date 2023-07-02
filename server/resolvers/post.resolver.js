@@ -5,10 +5,12 @@ const posts = [
   { id: 3, authorId: 2, title: "Advanced GraphQL", votes: 1 },
   { id: 4, authorId: 3, title: "Launchpad is Cool", votes: 7 },
 ];
+const totalPosts = () => posts.length;
 
 const postsResolver = {
   Query: {
     posts: () => posts,
+    totalPosts: totalPosts,
   },
 };
 
