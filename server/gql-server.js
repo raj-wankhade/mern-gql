@@ -1,4 +1,4 @@
-import { ApolloServer } from "@apollo/server";
+import { ApolloServer } from "@apollo-server-express";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import dotenv from "dotenv";
 dotenv.config();
