@@ -23,8 +23,7 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(firebaseReducer, initialState);
   const value = { state, dispatch };
-
-  return <AuthProvider value={value}>{children}</AuthProvider>;
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export { AuthContext, AuthProvider };

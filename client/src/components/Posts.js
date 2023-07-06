@@ -1,4 +1,6 @@
 import { useQuery, gql, useLazyQuery } from "@apollo/client";
+import { useContext } from "react";
+import { AuthContext } from "../context/authContext";
 
 const GET_POSTS = gql`
   query {
@@ -16,6 +18,8 @@ const GET_POSTS = gql`
 function Posts() {
   const { loading, error, data } = useQuery(GET_POSTS);
   const [fetchPosts, { data: posts }] = useLazyQuery(GET_POSTS);
+
+  const value = useContext(AuthContext);
 
   if (error) return <p>{error}</p>;
 
@@ -55,6 +59,7 @@ function Posts() {
         </button>
         {JSON.stringify(posts)}
       </div>
+      {JSON.stringify(value)}
     </div>
   );
 }
