@@ -19,15 +19,22 @@ function Posts() {
   const { loading, error, data } = useQuery(GET_POSTS);
   const [fetchPosts, { data: posts }] = useLazyQuery(GET_POSTS);
 
-  const value = useContext(AuthContext);
+  const { state, dispatch } = useContext(AuthContext);
+
+  const updateUser = () => {
+    dispatch({
+      type: "LOGGED_IN_USER",
+      payload: "raj wankhade",
+    });
+  };
 
   if (error) return <p>{error}</p>;
 
   if (loading) return <p>Loading ...</p>;
 
   return (
-    <div className="container">
-      <div className="row mt-3">
+    <div className="container px-4">
+      <div className="row gx-5 p-3">
         {data &&
           data.posts.map((post, index) => {
             return (
@@ -50,7 +57,7 @@ function Posts() {
 
         <button
           href="#"
-          className="btn btn-primary col-6 mx-auto"
+          className="btn btn-primary col-3 mx-auto"
           onClick={() => {
             fetchPosts();
           }}
@@ -59,7 +66,20 @@ function Posts() {
         </button>
         {JSON.stringify(posts)}
       </div>
-      {JSON.stringify(value)}
+      <div className="row gx-5 p-3">
+        <div>
+          <div className="row gx-5 p-3">
+            User is : {JSON.stringify(state.user)}
+          </div>
+          <button
+            href="#"
+            className="btn bg-dark text-white col-3 mx-auto"
+            onClick={updateUser}
+          >
+            Fetch Posts
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
