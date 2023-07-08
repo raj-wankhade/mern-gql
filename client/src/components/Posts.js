@@ -76,7 +76,7 @@ function Posts() {
             className="btn bg-dark text-white col-3 mx-auto"
             onClick={updateUser}
           >
-            Fetch Posts
+            Update User
           </button>
         </div>
       </div>
