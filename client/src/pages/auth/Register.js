@@ -1,3 +1,4 @@
+import { auth, sendSignInLinkToEmail } from "../../firebase.js";
 import React, { useState } from "react";
 
 export default function Register() {
@@ -6,8 +7,27 @@ export default function Register() {
 
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setLoading(true);
+
+    // firebase starts here
+    sendSignInLinkToEmail(auth, email, {
+      // redirect url
+      url: process.env.REACT_APP_CONFIRMATION_EMAIL_REDIRECT_ENDPOINT,
+      // this is a must
+      handleCodeInApp: true,
+    })
+      .then(() => {
+        // Save the email locally so you don't need to ask the user for it again
+        window.localStorage.setItem("emailForSignIn", email);
+      })
+      .catch((e) => {
+        console.log(e.message);
+      });
+
+    // firebase ends here
+
     console.log("submit success");
   };
 

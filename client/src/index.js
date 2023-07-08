@@ -6,6 +6,7 @@ import Posts from "./pages/Posts";
 
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
+import CompleteRegistration from "./pages/auth/CompleteRegistration";
 
 import { AuthProvider } from "./context/authContext";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "/complete-registration",
+        element: <CompleteRegistration />,
       },
     ],
   },
