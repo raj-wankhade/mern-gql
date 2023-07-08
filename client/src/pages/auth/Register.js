@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Alert from "../../components/Alert.js";
 
 export default function Register() {
-  const [email, setEmail] = useState("rajwankhade789@gmail.com");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [loading, setLoading] = useState(false);
