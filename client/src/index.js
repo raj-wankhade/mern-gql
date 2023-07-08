@@ -4,6 +4,9 @@ import "./index.css";
 import App from "./App";
 import Posts from "./pages/Posts";
 
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+
 import { AuthProvider } from "./context/authContext";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -23,6 +26,14 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Posts />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
       },
     ],
   },
