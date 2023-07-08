@@ -1,36 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = () => {
+    setLoading(true);
+    console.log("submit success");
+  };
+
   return (
     <div className="container col-md-6">
       <h3>Welcome</h3>
       <p>Please login to continue</p>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="mb-3 w-100 m-auto">
-          <label for="exampleInputEmail1" className="form-label">
+          <label htmlFor="email" className="form-label">
             Email address
           </label>
           <input
             type="email"
             className="form-control"
-            id="exampleInputEmail1"
+            id="email"
             aria-describedby="emailHelp"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
           />
           <div id="emailHelp" className="form-text">
             We'll never share your email with anyone else.
           </div>
         </div>
         <div className="mb-3">
-          <label for="exampleInputPassword1" className="form-label">
+          <label htmlFor="password" className="form-label">
             Password
           </label>
           <input
             type="password"
             className="form-control"
-            id="exampleInputPassword1"
+            id="password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
           />
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button
+          type="submit"
+          className="btn btn-primary"
+          disabled={loading ? true : false}
+        >
           Submit
         </button>
       </form>
