@@ -8,6 +8,7 @@ import {
   signInWithEmailLink,
   onAuthStateChanged,
   updatePassword,
+  signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
 
@@ -35,5 +36,6 @@ export {
   signInWithEmailLink,
   onAuthStateChanged,
   updatePassword,
+  signInWithEmailAndPassword,
   signOut,
 };

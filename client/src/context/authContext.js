@@ -28,6 +28,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        // if user.getProviderId().equals("password")that means user is signed in with password
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/auth.user
         const accessToken = user.accessToken;
