@@ -7,6 +7,7 @@ import {
   isSignInWithEmailLink,
   signInWithEmailLink,
   onAuthStateChanged,
+  updatePassword,
 } from "firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -32,4 +33,5 @@ export {
   isSignInWithEmailLink,
   signInWithEmailLink,
   onAuthStateChanged,
+  updatePassword,
 };

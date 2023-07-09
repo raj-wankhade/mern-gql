@@ -6,6 +6,7 @@ import {
   auth,
   isSignInWithEmailLink,
   signInWithEmailLink,
+  updatePassword,
 } from "../../firebase.js";
 import Alert from "../../components/Alert.js";
 import { AuthContext } from "../../context/authContext.js";
@@ -41,6 +42,9 @@ export default function CompleteRegistration() {
       console.log("result is", result);
       const user = result.user;
       const accessToken = user.accessToken;
+
+      // update user password
+      await updatePassword(user, password);
 
       // Clear email from storage.
       window.localStorage.removeItem("emailForSignIn");
