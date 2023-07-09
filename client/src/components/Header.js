@@ -1,7 +1,29 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/authContext";
+import { auth } from "../firebase";
 
 export default function Header() {
+  const { state, dispatch } = useContext(AuthContext);
+  const { user } = state;
+
+  const navigate = useNavigate();
+
+  const logout = () => {
+    signOut(auth)
+      .then(() => {
+        dispatch({
+          type: "LOGGED_IN_USER",
+          user: null,
+        });
+        navigate("/");
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+  };
+
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
@@ -22,9 +44,26 @@ export default function Header() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className="nav-link active" aria-current="page" to="/login">
-                Login
-              </Link>
+              {!user && (
+                <Link
+                  className="nav-link active"
+                  aria-current="page"
+                  to="/login"
+                >
+                  Login
+                </Link>
+              )}
+
+              {user && (
+                <Link
+                  className="nav-link active"
+                  aria-current="page"
+                  to="/"
+                  onClick={logout}
+                >
+                  Logout
+                </Link>
+              )}
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/register">
