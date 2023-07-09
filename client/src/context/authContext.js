@@ -1,4 +1,6 @@
-import { useReducer, createContext } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { useReducer, createContext, useEffect } from "react";
+import { auth } from "../firebase";
 
 // reducer
 const firebaseReducer = (state, action) => {
@@ -22,6 +24,26 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(firebaseReducer, initialState);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/auth.user
+        const accessToken = user.accessToken;
+
+        // dispatch accessToken
+        dispatch({
+          type: "LOGGED_IN_USER",
+          payload: { email: user.email, token: accessToken },
+        });
+      } else {
+        // User is signed out
+        // ...
+      }
+    });
+  }, []);
+
   const value = { state, dispatch };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

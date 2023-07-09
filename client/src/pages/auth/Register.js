@@ -57,6 +57,7 @@ export default function Register() {
             onChange={(e) => {
               setEmail(e.target.value);
             }}
+            autoComplete="true"
           />
           <div id="emailHelp" className="form-text">
             We'll never share your email with anyone else.
@@ -74,6 +75,7 @@ export default function Register() {
             onChange={(e) => {
               setPassword(e.target.value);
             }}
+            autoComplete="true"
           />
         </div>
         <button
