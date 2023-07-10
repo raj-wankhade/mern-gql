@@ -28,6 +28,8 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        const providerId = user.providerData[0].providerId;
+
         // if user.getProviderId().equals("password")that means user is signed in with password
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/auth.user
@@ -36,7 +38,7 @@ const AuthProvider = ({ children }) => {
         // dispatch accessToken
         dispatch({
           type: "LOGGED_IN_USER",
-          payload: { email: user.email, token: accessToken },
+          payload: { email: user.email, token: accessToken, providerId },
         });
       } else {
         // User is signed out

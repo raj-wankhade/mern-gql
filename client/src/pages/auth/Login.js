@@ -1,7 +1,13 @@
 import React, { useContext, useState } from "react";
 import Alert from "../../components/Alert";
 import { AuthContext } from "../../context/authContext";
-import { auth, signInWithEmailAndPassword } from "../../firebase";
+import {
+  auth,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+  provider,
+} from "../../firebase";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -23,11 +29,12 @@ export default function Login() {
         // Signed in
         const user = userCredential.user;
         const accessToken = user.accessToken;
+        const providerId = userCredential.providerId;
 
         // dispatch accessToken
         dispatch({
           type: "LOGGED_IN_USER",
-          payload: { email: user.email, token: accessToken },
+          payload: { email: user.email, token: accessToken, providerId },
         });
         setShowAlert(true);
         setIAlertType("success");
@@ -39,6 +46,31 @@ export default function Login() {
       });
 
     console.log("submit success");
+  };
+
+  const googleLogin = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        const providerId = result.providerId;
+        console.log("google result", result);
+        // dispatch accessToken
+        dispatch({
+          type: "LOGGED_IN_USER",
+          payload: { email: user.email, token: token, providerId },
+        });
+        setShowAlert(true);
+        setIAlertType("success");
+      })
+      .catch((e) => {
+        console.log(e.message);
+        setShowAlert(true);
+        setIAlertType("danger");
+      });
   };
 
   return (
@@ -80,13 +112,24 @@ export default function Login() {
             }}
           />
         </div>
-        <button
-          type="submit"
-          className="btn btn-primary"
-          disabled={loading ? true : false}
-        >
-          Submit
-        </button>
+        <div className="d-flex justify-content-between">
+          <button
+            type="submit"
+            className="btn btn-primary"
+            disabled={loading ? true : false}
+          >
+            Submit
+          </button>
+          {state.user && !state.user.providerId === "google.com" && (
+            <button
+              className="btn btn-danger"
+              type="button"
+              onClick={googleLogin}
+            >
+              Login with Google
+            </button>
+          )}
+        </div>
       </form>
     </div>
   );

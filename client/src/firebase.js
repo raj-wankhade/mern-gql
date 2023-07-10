@@ -9,6 +9,8 @@ import {
   onAuthStateChanged,
   updatePassword,
   signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
   signOut,
 } from "firebase/auth";
 
@@ -29,6 +31,7 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 
+const provider = new GoogleAuthProvider();
 export {
   auth,
   sendSignInLinkToEmail,
@@ -37,5 +40,8 @@ export {
   onAuthStateChanged,
   updatePassword,
   signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+  provider,
   signOut,
 };
