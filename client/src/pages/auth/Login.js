@@ -19,6 +19,8 @@ export default function Login() {
 
   const { state, dispatch } = useContext(AuthContext);
 
+  console.log("inside login", state.user);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -120,7 +122,7 @@ export default function Login() {
           >
             Submit
           </button>
-          {state.user && !state.user.providerId === "google.com" && (
+          {!state.user && (
             <button
               className="btn btn-danger"
               type="button"
