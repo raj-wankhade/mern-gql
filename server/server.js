@@ -28,7 +28,13 @@ const db = async () => {
 // execute database connection
 db();
 
-const apolloServer = new ApolloServer({ typeDefs, resolvers });
+const apolloServer = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: ({ req, res }) => {
+    return { req, res };
+  },
+});
 await apolloServer.start();
 
 // apply express middlware to apolloServer
