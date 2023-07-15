@@ -12,9 +12,10 @@ dotenv.config();
 import typeDefs from "./typeDefs/index.js";
 import resolvers from "./resolvers/index.js";
 
+import auth from "./auth/auth.js";
+
 const app = express();
 
-// db
 // db
 const db = async () => {
   try {
@@ -34,7 +35,7 @@ await apolloServer.start();
 // applyMiddleware server connects ApolloServer to HTTP Framework i;e express
 apolloServer.applyMiddleware({ app });
 
-app.get("/", function (req, res) {
+app.get("/", auth, function (req, res) {
   res.json({
     data: "some response",
   });
