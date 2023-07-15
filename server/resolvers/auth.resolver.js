@@ -1,11 +1,13 @@
 import auth from "../auth/auth.js";
 
+const me = async (_, args, context) => {
+  await auth(context.req);
+  return "RAJ";
+};
+
 const authResolver = {
   Query: {
-    me: (_, args, context) => {
-      auth(context.req, context.res);
-      return "RAJ";
-    },
+    me,
   },
 };
 
