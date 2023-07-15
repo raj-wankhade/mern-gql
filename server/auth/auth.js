@@ -1,6 +1,7 @@
 const auth = (req, res, next = (f) => f) => {
-  // this console will print on terminal as it is coming from backend nodejs
-  console.log("inside auth middleware");
+  if (!req.headers.token || req.headers.token !== "secret")
+    throw new Error("You are not authorized.");
+  // else allow to proceed
   next();
 };
 
