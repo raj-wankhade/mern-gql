@@ -1,32 +1,37 @@
+import auth from "../auth/auth.js";
 import { authors } from "../resolvers/author.resolver.js";
 
 // example data
-const posts = [
-  {
-    id: 1,
-    author: authors.find((author) => author.id === 1),
-    title: "Introduction to GraphQL",
-    votes: 2,
-  },
-  {
-    id: 2,
-    author: authors.find((author) => author.id === 2),
-    title: "Welcome to Meteor",
-    votes: 3,
-  },
-  {
-    id: 3,
-    author: authors.find((author) => author.id === 2),
-    title: "Advanced GraphQL",
-    votes: 1,
-  },
-  {
-    id: 4,
-    author: authors.find((author) => author.id === 4),
-    title: "Launchpad is Cool",
-    votes: 7,
-  },
-];
+const posts = async (_, args, context) => {
+  await auth(context.req);
+  return [
+    {
+      id: 1,
+      author: authors.find((author) => author.id === 1),
+      title: "Introduction to GraphQL",
+      votes: 2,
+    },
+    {
+      id: 2,
+      author: authors.find((author) => author.id === 2),
+      title: "Welcome to Meteor",
+      votes: 3,
+    },
+    {
+      id: 3,
+      author: authors.find((author) => author.id === 2),
+      title: "Advanced GraphQL",
+      votes: 1,
+    },
+    {
+      id: 4,
+      author: authors.find((author) => author.id === 4),
+      title: "Launchpad is Cool",
+      votes: 7,
+    },
+  ];
+};
+
 const totalPosts = () => posts.length;
 
 // Mutation
@@ -50,8 +55,8 @@ const newPost = (parent, args) => {
 
 const postsResolver = {
   Query: {
-    posts: () => posts,
-    totalPosts: totalPosts,
+    posts,
+    totalPosts,
   },
   Mutation: {
     newPost,
