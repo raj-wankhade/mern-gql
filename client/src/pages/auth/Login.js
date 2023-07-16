@@ -10,7 +10,8 @@ import {
   GoogleAuthProvider,
   provider,
 } from "../../firebase";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import AuthForm from "../../form/AuthForm";
 
 const CREATE_USER = gql`
   mutation userCreate {
@@ -101,62 +102,35 @@ export default function Login() {
 
   return (
     <div className="container col-md-6">
-      <h3>Welcome</h3>
-      <p>Please login to continue</p>
+      {loading ? <h4 className="text-danger">Loading...</h4> : <h4>Login</h4>}
       <Alert type={alertType} show={showAlert} />
 
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3 w-100 m-auto">
-          <label htmlFor="email" className="form-label">
-            Email address
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            id="email"
-            aria-describedby="emailHelp"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          />
-          <div id="emailHelp" className="form-text">
-            We'll never share your email with anyone else.
+      <AuthForm
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
+        loading={loading}
+        handleSubmit={handleSubmit}
+        showPasswordInput="true"
+      />
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-6">
+            <Link className="text-danger float-right" to="/password/forgot">
+              Forgot Password
+            </Link>
           </div>
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Password
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            id="password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
-        </div>
-        <div className="d-flex justify-content-between">
-          <button
-            type="submit"
-            className="btn btn-primary"
-            disabled={loading ? true : false}
-          >
-            Submit
-          </button>
-          {!state.user && (
+          <div className="col-sm-6">
             <button
-              className="btn btn-danger"
-              type="button"
               onClick={googleLogin}
+              className="btn btn-raised btn-danger float-left"
             >
               Login with Google
             </button>
-          )}
+          </div>
         </div>
-      </form>
+      </div>
     </div>
   );
 }

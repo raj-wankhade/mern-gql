@@ -1,6 +1,7 @@
 import { auth, sendSignInLinkToEmail } from "../../firebase.js";
 import React, { useState } from "react";
 import Alert from "../../components/Alert.js";
+import AuthForm from "../../form/AuthForm.js";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -38,52 +39,17 @@ export default function Register() {
 
   return (
     <div className="container col-md-6">
-      <h3>Welcome</h3>
-      <p>Please register to continue</p>
-      <Alert type={alertType} show={showAlert} />
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3 w-100 m-auto">
-          <label htmlFor="email" className="form-label">
-            Email address
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            id="email"
-            aria-describedby="emailHelp"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            autoComplete="true"
-          />
-          <div id="emailHelp" className="form-text">
-            We'll never share your email with anyone else.
-          </div>
-        </div>
-        {/* <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Password
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            id="password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            autoComplete="true"
-          />
-        </div> */}
-        <button
-          type="submit"
-          className="btn btn-primary"
-          disabled={loading ? true : false}
-        >
-          Submit
-        </button>
-      </form>
+      {loading ? (
+        <h4 className="text-danger">Loading...</h4>
+      ) : (
+        <h4>Register</h4>
+      )}
+      <AuthForm
+        email={email}
+        loading={loading}
+        setEmail={setEmail}
+        handleSubmit={handleSubmit}
+      />
     </div>
   );
 }
