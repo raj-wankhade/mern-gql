@@ -14,9 +14,8 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { AuthContext } from "./context/authContext";
-import { useContext } from "react";
 import Home from "./pages/Home";
+import Profile from "./pages/Profile";
 
 const httpLink = createHttpLink({
   uri: process.env.REACT_APP_GRAPHQL_ENDPOINT,
@@ -30,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
       },
       {
         path: "/posts",
@@ -52,14 +55,14 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  const { state } = useContext(AuthContext);
   const authLink = setContext((_, { headers }) => {
-    const token = state && state.user ? state.user.token : null;
+    const token = localStorage.getItem("accessToken");
+
     // return the headers to the context so httpLink can read them
     return {
       headers: {
         ...headers,
-        token: token ? `${token}` : "",
+        token: token,
       },
     };
   });

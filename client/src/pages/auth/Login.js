@@ -10,6 +10,7 @@ import {
   GoogleAuthProvider,
   provider,
 } from "../../firebase";
+import { useNavigate } from "react-router-dom";
 
 const CREATE_USER = gql`
   mutation userCreate {
@@ -23,6 +24,8 @@ const CREATE_USER = gql`
 
 export default function Login() {
   const [userCreate] = useMutation(CREATE_USER);
+
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -39,20 +42,21 @@ export default function Login() {
     setLoading(true);
 
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        const accessToken = user.accessToken;
-        const providerId = userCredential.providerId;
+      .then(async (result) => {
+        const { user } = result;
+        const idTokenResult = await user.getIdTokenResult();
 
-        // dispatch accessToken
+        localStorage.setItem("accessToken", idTokenResult.token);
+
         dispatch({
           type: "LOGGED_IN_USER",
-          payload: { email: user.email, token: accessToken, providerId },
+          payload: { email: user.email, token: idTokenResult.token },
         });
 
-        // dispatch graphql query to save the user in db
+        // send user info to our server mongodb to either update/create
         userCreate();
+
+        navigate("/profile");
 
         setShowAlert(true);
         setIAlertType("success");
@@ -62,17 +66,20 @@ export default function Login() {
         setShowAlert(true);
         setIAlertType("danger");
       });
+    setLoading(false);
   };
 
   const googleLogin = () => {
+    setLoading(true);
+
     signInWithPopup(auth, provider)
       .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.idToken;
-        // The signed-in user info.
         const user = result.user;
+        const token = result.user.accessToken;
         const providerId = result.providerId;
+
+        localStorage.setItem("accessToken", token);
+
         // dispatch accessToken
         dispatch({
           type: "LOGGED_IN_USER",
@@ -89,6 +96,7 @@ export default function Login() {
         setShowAlert(true);
         setIAlertType("danger");
       });
+    setLoading(false);
   };
 
   return (

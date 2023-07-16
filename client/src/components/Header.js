@@ -13,6 +13,8 @@ export default function Header() {
   const logout = () => {
     signOut(auth)
       .then(() => {
+        localStorage.removeItem("accessToken");
+
         dispatch({
           type: "LOGGED_IN_USER",
           user: null,
@@ -48,6 +50,17 @@ export default function Header() {
                 <Link
                   className="nav-link active"
                   aria-current="page"
+                  to="/profile"
+                >
+                  Profile
+                </Link>
+              </li>
+            )}
+            {user && (
+              <li className="nav-item">
+                <Link
+                  className="nav-link active"
+                  aria-current="page"
                   to="/posts"
                 >
                   Posts
@@ -76,11 +89,13 @@ export default function Header() {
                 </Link>
               )}
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/register">
-                Register
-              </Link>
-            </li>
+            {!user && (
+              <li className="nav-item">
+                <Link className="nav-link" to="/register">
+                  Register
+                </Link>
+              </li>
+            )}
           </ul>
           <form className="d-flex" role="search">
             <input
