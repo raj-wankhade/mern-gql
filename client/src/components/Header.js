@@ -28,7 +28,7 @@ export default function Header() {
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
-          MERN-GQL
+          Home
         </Link>
         <button
           className="navbar-toggler"
