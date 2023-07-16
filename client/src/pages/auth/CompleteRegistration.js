@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
+import { gql, useMutation } from "@apollo/client";
 
 import {
   auth,
@@ -11,7 +12,19 @@ import {
 import Alert from "../../components/Alert.js";
 import { AuthContext } from "../../context/authContext.js";
 
+const CREATE_USER = gql`
+  mutation userCreate {
+    userCreate {
+      username
+      password
+      email
+    }
+  }
+`;
+
 export default function CompleteRegistration() {
+  const [userCreate] = useMutation(CREATE_USER);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -54,6 +67,9 @@ export default function CompleteRegistration() {
         type: "LOGGED_IN_USER",
         payload: { email: user.email, token: accessToken },
       });
+
+      // dispatch graphql query to save the user in db
+      userCreate();
 
       // redirect
       navigate("/");
