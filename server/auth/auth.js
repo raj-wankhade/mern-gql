@@ -7,8 +7,6 @@ admin.initializeApp({
 });
 
 const auth = async (req, res, next = (f) => f) => {
-  if (!req.headers.token) throw new Error("You are not authorized.");
-
   try {
     const currentUser = await admin.auth().verifyIdToken(req.headers.token);
 

@@ -1,4 +1,6 @@
 import React, { useContext, useState } from "react";
+import { gql, useMutation } from "@apollo/client";
+
 import Alert from "../../components/Alert";
 import { AuthContext } from "../../context/authContext";
 import {
@@ -9,7 +11,19 @@ import {
   provider,
 } from "../../firebase";
 
+const CREATE_USER = gql`
+  mutation userCreate {
+    userCreate {
+      username
+      password
+      email
+    }
+  }
+`;
+
 export default function Login() {
+  const [userCreate] = useMutation(CREATE_USER);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -38,6 +52,10 @@ export default function Login() {
           type: "LOGGED_IN_USER",
           payload: { email: user.email, token: accessToken, providerId },
         });
+
+        // dispatch graphql query to save the user in db
+        userCreate();
+
         setShowAlert(true);
         setIAlertType("success");
       })
@@ -55,16 +73,18 @@ export default function Login() {
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
+        const token = credential.idToken;
         // The signed-in user info.
         const user = result.user;
         const providerId = result.providerId;
-        console.log("google result", result);
         // dispatch accessToken
         dispatch({
           type: "LOGGED_IN_USER",
           payload: { email: user.email, token: token, providerId },
         });
+        // dispatch graphql query to save the user in db
+        userCreate();
+
         setShowAlert(true);
         setIAlertType("success");
       })

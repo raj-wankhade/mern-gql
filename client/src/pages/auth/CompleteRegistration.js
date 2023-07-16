@@ -54,7 +54,7 @@ export default function CompleteRegistration() {
       );
       console.log("result is", result);
       const user = result.user;
-      const accessToken = user.accessToken;
+      const idToken = user.idToken;
 
       // update user password
       await updatePassword(user, password);
@@ -62,10 +62,10 @@ export default function CompleteRegistration() {
       // Clear email from storage.
       window.localStorage.removeItem("emailForSignIn");
 
-      // dispatch accessToken
+      // dispatch idToken
       dispatch({
         type: "LOGGED_IN_USER",
-        payload: { email: user.email, token: accessToken },
+        payload: { email: user.email, token: idToken },
       });
 
       // dispatch graphql query to save the user in db
