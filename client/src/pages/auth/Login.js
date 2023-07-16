@@ -33,8 +33,6 @@ export default function Login() {
 
   const { state, dispatch } = useContext(AuthContext);
 
-  console.log("inside login", state.user);
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -64,8 +62,6 @@ export default function Login() {
         setShowAlert(true);
         setIAlertType("danger");
       });
-
-    console.log("submit success");
   };
 
   const googleLogin = () => {

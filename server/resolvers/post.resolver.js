@@ -36,7 +36,6 @@ const totalPosts = () => posts.length;
 // Mutation
 // parent or _
 const newPost = (parent, args) => {
-  console.log("args are", args);
   args = args.input;
   // create a new post object
   const post = {
@@ -48,7 +47,6 @@ const newPost = (parent, args) => {
 
   posts.push(post);
 
-  console.log("post is", post);
   return post;
 };
 

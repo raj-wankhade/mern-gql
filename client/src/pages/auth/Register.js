@@ -34,8 +34,6 @@ export default function Register() {
       });
 
     // firebase ends here
-
-    console.log("submit success");
   };
 
   return (

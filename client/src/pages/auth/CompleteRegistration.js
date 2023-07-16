@@ -52,7 +52,7 @@ export default function CompleteRegistration() {
         email,
         window.location.href
       );
-      console.log("result is", result);
+
       const user = result.user;
       const idToken = user.idToken;
 
@@ -74,8 +74,6 @@ export default function CompleteRegistration() {
       // redirect
       navigate("/");
     }
-
-    console.log("submit success");
   };
 
   return (
