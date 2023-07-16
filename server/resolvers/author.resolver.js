@@ -1,4 +1,3 @@
-// example data
 export const authors = [
   { id: 1, firstName: "Tom", lastName: "Coleman" },
   { id: 2, firstName: "Sashko", lastName: "Stubailo" },

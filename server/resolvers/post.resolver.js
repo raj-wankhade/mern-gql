@@ -1,7 +1,6 @@
 import auth from "../auth/auth.js";
 import { authors } from "../resolvers/author.resolver.js";
 
-// example data
 const posts = async (_, args, context) => {
   await auth(context.req);
   return [
