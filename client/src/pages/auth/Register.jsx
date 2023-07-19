@@ -1,7 +1,8 @@
-import { auth, sendSignInLinkToEmail } from "../../firebase.js";
+import { auth, sendSignInLinkToEmail } from "../../firebase";
 import React, { useState } from "react";
-import Alert from "../../components/Alert.js";
-import AuthForm from "../../form/AuthForm.js";
+import Alert from "../../components/Alert";
+import AuthForm from "../../form/AuthForm";
+import PageTitle from "../../components/PageTitle";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -38,18 +39,20 @@ export default function Register() {
   };
 
   return (
-    <div className="container col-md-6">
-      {loading ? (
-        <h4 className="text-danger">Loading...</h4>
-      ) : (
-        <h4>Register</h4>
-      )}
-      <AuthForm
-        email={email}
-        loading={loading}
-        setEmail={setEmail}
-        handleSubmit={handleSubmit}
-      />
+    <div className="d-flex justify-content-center">
+      <div className="container px-4">
+        <div className="row gx-5 p-3">
+          <PageTitle loading={loading} title={"Register"} />
+          <Alert type={alertType} show={showAlert} />
+          <AuthForm
+            email={email}
+            loading={loading}
+            setEmail={setEmail}
+            handleSubmit={handleSubmit}
+            isLogin={true}
+          />
+        </div>
+      </div>
     </div>
   );
 }

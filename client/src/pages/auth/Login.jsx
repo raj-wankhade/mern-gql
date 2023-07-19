@@ -7,11 +7,11 @@ import {
   auth,
   signInWithEmailAndPassword,
   signInWithPopup,
-  GoogleAuthProvider,
   provider,
 } from "../../firebase";
 import { Link, useNavigate } from "react-router-dom";
 import AuthForm from "../../form/AuthForm";
+import PageTitle from "../../components/PageTitle";
 
 const CREATE_USER = gql`
   mutation userCreate {
@@ -88,9 +88,10 @@ export default function Login() {
         });
         // dispatch graphql query to save the user in db
         userCreate();
-
         setShowAlert(true);
         setIAlertType("success");
+
+        navigate("/profile");
       })
       .catch((e) => {
         console.log(e.message);
@@ -101,33 +102,56 @@ export default function Login() {
   };
 
   return (
-    <div className="container col-md-6">
-      {loading ? <h4 className="text-danger">Loading...</h4> : <h4>Login</h4>}
-      <Alert type={alertType} show={showAlert} />
+    <div className="d-flex justify-content-center">
+      <div className="container px-4">
+        <div className="row gx-5 p-3">
+          <PageTitle loading={loading} title={"Login"} />
 
-      <AuthForm
-        email={email}
-        setEmail={setEmail}
-        password={password}
-        setPassword={setPassword}
-        loading={loading}
-        handleSubmit={handleSubmit}
-        showPasswordInput="true"
-      />
-      <div className="container">
-        <div className="row">
-          <div className="col-sm-6">
-            <Link className="text-danger float-right" to="/password/forgot">
-              Forgot Password
-            </Link>
-          </div>
-          <div className="col-sm-6">
-            <button
-              onClick={googleLogin}
-              className="btn btn-raised btn-danger float-left"
-            >
-              Login with Google
-            </button>
+          <Alert type={alertType} show={showAlert} />
+
+          <AuthForm
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+            loading={loading}
+            handleSubmit={handleSubmit}
+            showPasswordInput="true"
+          />
+          <div className="container">
+            <div className="row">
+              <div className="text-center">
+                <p>or sign up with:</p>
+                <button
+                  type="button"
+                  className="btn btn-secondary btn-floating mx-1"
+                >
+                  <i className="bi bi-facebook"></i>{" "}
+                </button>
+
+                <button
+                  type="button"
+                  className="btn btn-secondary btn-floating mx-1"
+                  onClick={googleLogin}
+                >
+                  <i className="bi bi-google"></i>{" "}
+                </button>
+
+                <button
+                  type="button"
+                  className="btn btn-secondary btn-floating mx-1"
+                >
+                  <i className="bi bi-twitter"></i>{" "}
+                </button>
+
+                <button
+                  type="button"
+                  className="btn btn-secondary btn-floating mx-1"
+                >
+                  <i className="bi bi-github"></i>{" "}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

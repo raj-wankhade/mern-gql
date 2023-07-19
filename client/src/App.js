@@ -16,6 +16,7 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
+import Products from "./pages/Products";
 
 const httpLink = createHttpLink({
   uri: process.env.REACT_APP_GRAPHQL_ENDPOINT,
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/products",
+        element: <Products />,
       },
       {
         path: "/posts",

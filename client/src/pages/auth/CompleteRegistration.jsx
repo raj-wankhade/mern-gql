@@ -8,9 +8,9 @@ import {
   isSignInWithEmailLink,
   signInWithEmailLink,
   updatePassword,
-} from "../../firebase.js";
-import Alert from "../../components/Alert.js";
-import { AuthContext } from "../../context/authContext.js";
+} from "../../firebase";
+import Alert from "../../components/Alert";
+import { AuthContext } from "../../context/authContext";
 
 const CREATE_USER = gql`
   mutation userCreate {
