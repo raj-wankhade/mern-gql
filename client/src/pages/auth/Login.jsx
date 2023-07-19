@@ -1,17 +1,17 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef } from "react";
 import { gql, useMutation } from "@apollo/client";
+import { toast, ToastContainer } from "react-toastify";
 
-import Alert from "../../components/Alert";
 import { AuthContext } from "../../context/authContext";
 import {
   auth,
   signInWithEmailAndPassword,
   signInWithPopup,
-  GoogleAuthProvider,
   provider,
 } from "../../firebase";
 import { Link, useNavigate } from "react-router-dom";
 import AuthForm from "../../form/AuthForm";
+import Toast from "../../components/Toast";
 
 const CREATE_USER = gql`
   mutation userCreate {
@@ -32,8 +32,6 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   const [loading, setLoading] = useState(false);
-  const [alertType, setIAlertType] = useState(null);
-  const [showAlert, setShowAlert] = useState(false);
 
   const { state, dispatch } = useContext(AuthContext);
 
@@ -58,14 +56,11 @@ export default function Login() {
         userCreate();
 
         navigate("/profile");
-
-        setShowAlert(true);
-        setIAlertType("success");
+        Toast("success", "Login successfull!");
       })
       .catch((e) => {
         console.log(e.message);
-        setShowAlert(true);
-        setIAlertType("danger");
+        Toast("error", e.message);
       });
     setLoading(false);
   };
@@ -89,13 +84,13 @@ export default function Login() {
         // dispatch graphql query to save the user in db
         userCreate();
 
-        setShowAlert(true);
-        setIAlertType("success");
+        Toast("success", "Login successfull!");
+
+        navigate("/profile");
       })
       .catch((e) => {
         console.log(e.message);
-        setShowAlert(true);
-        setIAlertType("danger");
+        Toast("error", e.message);
       });
     setLoading(false);
   };
@@ -103,7 +98,6 @@ export default function Login() {
   return (
     <div className="container col-md-6">
       {loading ? <h4 className="text-danger">Loading...</h4> : <h4>Login</h4>}
-      <Alert type={alertType} show={showAlert} />
 
       <AuthForm
         email={email}
@@ -116,17 +110,35 @@ export default function Login() {
       />
       <div className="container">
         <div className="row">
-          <div className="col-sm-6">
-            <Link className="text-danger float-right" to="/password/forgot">
-              Forgot Password
-            </Link>
-          </div>
-          <div className="col-sm-6">
+          <div className="text-center">
+            <p>or sign up with:</p>
             <button
-              onClick={googleLogin}
-              className="btn btn-raised btn-danger float-left"
+              type="button"
+              className="btn btn-secondary btn-floating mx-1"
             >
-              Login with Google
+              <i className="bi bi-facebook"></i>{" "}
+            </button>
+
+            <button
+              type="button"
+              className="btn btn-secondary btn-floating mx-1"
+              onClick={googleLogin}
+            >
+              <i className="bi bi-google"></i>{" "}
+            </button>
+
+            <button
+              type="button"
+              className="btn btn-secondary btn-floating mx-1"
+            >
+              <i className="bi bi-twitter"></i>{" "}
+            </button>
+
+            <button
+              type="button"
+              className="btn btn-secondary btn-floating mx-1"
+            >
+              <i className="bi bi-github"></i>{" "}
             </button>
           </div>
         </div>

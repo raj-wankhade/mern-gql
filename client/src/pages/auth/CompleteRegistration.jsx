@@ -9,8 +9,8 @@ import {
   signInWithEmailLink,
   updatePassword,
 } from "../../firebase.js";
-import Alert from "../../components/Alert.js";
 import { AuthContext } from "../../context/authContext.js";
+import Toast from "../../components/Toast.jsx";
 
 const CREATE_USER = gql`
   mutation userCreate {
@@ -29,8 +29,6 @@ export default function CompleteRegistration() {
   const [password, setPassword] = useState("");
 
   const [loading, setLoading] = useState(false);
-  const [alertType, setAlertType] = useState(null);
-  const [showAlert, setShowAlert] = useState(false);
 
   const { state, dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -42,10 +40,9 @@ export default function CompleteRegistration() {
     e.preventDefault();
     setLoading(true);
 
-    // if (!email || !password) {
-    //   setShowAlert(true);
-    //   setAlertType("danger");
-    // }
+    if (!email || !password) {
+      Toast("error", "Please check your credentials!");
+    }
     if (isSignInWithEmailLink(auth, window.location.href)) {
       const result = await signInWithEmailLink(
         auth,
@@ -54,7 +51,9 @@ export default function CompleteRegistration() {
       );
 
       const user = result.user;
-      const idToken = user.idToken;
+      const idTokenResult = await user.getIdTokenResult();
+
+      localStorage.setItem("accessToken", idTokenResult.token);
 
       // update user password
       await updatePassword(user, password);
@@ -65,11 +64,14 @@ export default function CompleteRegistration() {
       // dispatch idToken
       dispatch({
         type: "LOGGED_IN_USER",
-        payload: { email: user.email, token: idToken },
+        payload: { email: user.email, token: idTokenResult.token },
       });
+      // set to local storage
+      localStorage.setItem("accessToken", idTokenResult.token);
 
       // dispatch graphql query to save the user in db
       userCreate();
+      Toast("success", "Login successfull!");
 
       // redirect
       navigate("/");
@@ -78,10 +80,6 @@ export default function CompleteRegistration() {
 
   return (
     <div className="container">
-      <h2>Congratulations!</h2>
-      <p>Registration complete.</p>
-
-      <Alert type={alertType} show={showAlert} />
       <form onSubmit={handleSubmit}>
         <div className="mb-3 w-100 m-auto">
           <label htmlFor="email" className="form-label">

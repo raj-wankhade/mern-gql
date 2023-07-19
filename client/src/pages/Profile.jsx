@@ -6,7 +6,6 @@ export default function Profile() {
       <div className="container px-4">
         <div className="row gx-5 p-3">
           <h3>Profile</h3>
-          <p>How you doing?</p>
         </div>
       </div>
     </div>

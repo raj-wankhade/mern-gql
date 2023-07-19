@@ -17,6 +17,10 @@ import { setContext } from "@apollo/client/link/context";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import "react-toastify/dist/ReactToastify.css";
+
 const httpLink = createHttpLink({
   uri: process.env.REACT_APP_GRAPHQL_ENDPOINT,
 });
@@ -37,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/posts",
         element: <Posts />,
+      },
+      {
+        path: "/forgot-password",
+        element: <Register />,
       },
       {
         path: "/login",

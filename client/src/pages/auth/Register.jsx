@@ -1,15 +1,13 @@
 import { auth, sendSignInLinkToEmail } from "../../firebase.js";
 import React, { useState } from "react";
-import Alert from "../../components/Alert.js";
-import AuthForm from "../../form/AuthForm.js";
+import AuthForm from "../../form/AuthForm";
+import Toast from "../../components/Toast.jsx";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
 
   const [loading, setLoading] = useState(false);
-  const [alertType, setIAlertType] = useState(null);
-  const [showAlert, setShowAlert] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,15 +21,15 @@ export default function Register() {
       handleCodeInApp: true,
     })
       .then(() => {
+        setLoading(false);
+
         // Save the email locally so you don't need to ask the user for it again
         window.localStorage.setItem("emailForSignIn", email);
-        setShowAlert(true);
-        setIAlertType("success");
+        Toast("success", "Please check your email...");
       })
       .catch((e) => {
         console.log(e.message);
-        setShowAlert(true);
-        setIAlertType("danger");
+        Toast("error", e.message);
       });
 
     // firebase ends here

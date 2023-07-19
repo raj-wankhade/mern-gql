@@ -29,13 +29,12 @@ const AuthProvider = ({ children }) => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const providerId = user.providerData[0].providerId;
-
-        const accessToken = user.accessToken;
+        localStorage.setItem("accessToken", user.accessToken);
 
         // dispatch accessToken
         dispatch({
           type: "LOGGED_IN_USER",
-          payload: { email: user.email, token: accessToken, providerId },
+          payload: { email: user.email, token: user.accessToken, providerId },
         });
       } else {
         // User is signed out
