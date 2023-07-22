@@ -3,8 +3,10 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
+
 import { signOut } from "firebase/auth";
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -35,13 +37,29 @@ function Header() {
   return (
     <>
       {[false].map((expand) => (
-        <Navbar key={expand} expand={expand} className="bg-body-tertiary mb-3">
+        <Navbar
+          key={expand}
+          collapseOnSelect
+          expand={expand}
+          className="bg-body-tertiary me-auto  my-2 my-lg-0"
+        >
           <Container fluid>
-            <Navbar.Brand href="#">Navbar Offcanvas</Navbar.Brand>
+            <Navbar.Brand href="#">MERN-GQL</Navbar.Brand>
+            <>
+              <Form className="d-flex mb-1">
+                <Form.Control
+                  type="search"
+                  placeholder="Search"
+                  className="me-1"
+                  aria-label="Search"
+                />
+                <Button variant="outline-success">Search</Button>
+              </Form>
+            </>
             {!user && (
               <>
                 <Nav.Link as={Link} to="/login">
-                  login
+                  Login
                 </Nav.Link>
                 <Nav.Link as={Link} to="/register">
                   Register
@@ -51,7 +69,12 @@ function Header() {
             {user && (
               <>
                 <Nav.Link onClick={logout}>
-                  <i className="bi bi-power"></i>
+                  <OverlayTrigger
+                    placement="bottom"
+                    overlay={<Tooltip id="tooldip">Signout</Tooltip>}
+                  >
+                    <i className="bi bi-power"></i>
+                  </OverlayTrigger>
                 </Nav.Link>
                 <Navbar.Toggle
                   aria-controls={`offcanvasNavbar-expand-${expand}`}
@@ -61,50 +84,32 @@ function Header() {
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-${expand}`}
               aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
-              placement="start"
+              placement="end"
             >
               <Offcanvas.Header closeButton>
                 <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
-                  Offcanvas
+                  MERN-GQL
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>
-                <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Nav.Link as={Link} to="/">
-                    <i className="bi bi-house"></i> Home
+                <Nav className="flex-grow-1 pe-3">
+                  <Nav.Link as={Link} to="/" className="d-flex">
+                    <i className="bi bi-house vertical-align: middle; margin:auto"></i>
+                    <span className="px-2">Home</span>
                   </Nav.Link>
                   <Nav.Link as={Link} to="/profile">
-                    <i className="bi bi-person"></i> Profile
+                    <i className="bi bi-house vertical-align: middle; margin:auto"></i>
+                    <span className="px-2">Profile</span>
                   </Nav.Link>
-                  <Nav.Link as={Link} to="/products">
-                    <i className="bi bi-house"></i> Products
+                  <Nav.Link as={Link} to="/courses">
+                    <i className="bi bi-house vertical-align: middle; margin:auto"></i>
+                    <span className="px-2">Courses</span>
                   </Nav.Link>
                   <Nav.Link as={Link} to="/posts">
-                    <i className="bi bi-house"></i> Posts
+                    <i className="bi bi-house vertical-align: middle; margin:auto"></i>
+                    <span className="px-2">Posts</span>
                   </Nav.Link>
-                  <NavDropdown
-                    title="Dropdown"
-                    id={`offcanvasNavbarDropdown-expand-${expand}`}
-                  >
-                    <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action4">
-                      Another action
-                    </NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href="#action5">
-                      Something else here
-                    </NavDropdown.Item>
-                  </NavDropdown>
                 </Nav>
-                <Form className="d-flex">
-                  <Form.Control
-                    type="search"
-                    placeholder="Search"
-                    className="me-1"
-                    aria-label="Search"
-                  />
-                  <Button variant="outline-success">Search</Button>
-                </Form>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
           </Container>

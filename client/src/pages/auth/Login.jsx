@@ -12,6 +12,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import AuthForm from "../../form/AuthForm";
 import Toast from "../../components/Toast";
+import AuthHeader from "./AuthHeader";
 
 const CREATE_USER = gql`
   mutation userCreate {
@@ -96,53 +97,56 @@ export default function Login() {
   };
 
   return (
-    <div className="container col-md-6">
-      {loading ? <h4 className="text-danger">Loading...</h4> : <h4>Login</h4>}
+    <>
+      <AuthHeader />
+      <div className="container col-md-6">
+        {loading ? <h4 className="text-danger">Loading...</h4> : <h4>Login</h4>}
 
-      <AuthForm
-        email={email}
-        setEmail={setEmail}
-        password={password}
-        setPassword={setPassword}
-        loading={loading}
-        handleSubmit={handleSubmit}
-        showPasswordInput="true"
-      />
-      <div className="container">
-        <div className="row">
-          <div className="text-center">
-            <p>or sign up with:</p>
-            <button
-              type="button"
-              className="btn btn-secondary btn-floating mx-1"
-            >
-              <i className="bi bi-facebook"></i>{" "}
-            </button>
+        <AuthForm
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          loading={loading}
+          handleSubmit={handleSubmit}
+          showPasswordInput="true"
+        />
+        <div className="container">
+          <div className="row">
+            <div className="text-center">
+              <p>or sign up with:</p>
+              <button
+                type="button"
+                className="btn btn-secondary btn-floating mx-1"
+              >
+                <i className="bi bi-facebook"></i>{" "}
+              </button>
 
-            <button
-              type="button"
-              className="btn btn-secondary btn-floating mx-1"
-              onClick={googleLogin}
-            >
-              <i className="bi bi-google"></i>{" "}
-            </button>
+              <button
+                type="button"
+                className="btn btn-secondary btn-floating mx-1"
+                onClick={googleLogin}
+              >
+                <i className="bi bi-google"></i>{" "}
+              </button>
 
-            <button
-              type="button"
-              className="btn btn-secondary btn-floating mx-1"
-            >
-              <i className="bi bi-twitter"></i>{" "}
-            </button>
+              <button
+                type="button"
+                className="btn btn-secondary btn-floating mx-1"
+              >
+                <i className="bi bi-twitter"></i>{" "}
+              </button>
 
-            <button
-              type="button"
-              className="btn btn-secondary btn-floating mx-1"
-            >
-              <i className="bi bi-github"></i>{" "}
-            </button>
+              <button
+                type="button"
+                className="btn btn-secondary btn-floating mx-1"
+              >
+                <i className="bi bi-github"></i>{" "}
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -2,6 +2,7 @@ import { auth, sendSignInLinkToEmail } from "../../firebase.js";
 import React, { useState } from "react";
 import AuthForm from "../../form/AuthForm";
 import Toast from "../../components/Toast.jsx";
+import AuthHeader from "./AuthHeader.jsx";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -36,18 +37,21 @@ export default function Register() {
   };
 
   return (
-    <div className="container col-md-6">
-      {loading ? (
-        <h4 className="text-danger">Loading...</h4>
-      ) : (
-        <h4>Register</h4>
-      )}
-      <AuthForm
-        email={email}
-        loading={loading}
-        setEmail={setEmail}
-        handleSubmit={handleSubmit}
-      />
-    </div>
+    <>
+      <AuthHeader />
+      <div className="container col-md-6">
+        {loading ? (
+          <h4 className="text-danger">Loading...</h4>
+        ) : (
+          <h4>Register</h4>
+        )}
+        <AuthForm
+          email={email}
+          loading={loading}
+          setEmail={setEmail}
+          handleSubmit={handleSubmit}
+        />
+      </div>
+    </>
   );
 }

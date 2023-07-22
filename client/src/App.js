@@ -20,6 +20,7 @@ import Profile from "./pages/Profile";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "react-toastify/dist/ReactToastify.css";
+import Courses from "./pages/Courses";
 
 const httpLink = createHttpLink({
   uri: process.env.REACT_APP_GRAPHQL_ENDPOINT,
@@ -43,22 +44,28 @@ const router = createBrowserRouter([
         element: <Posts />,
       },
       {
+        path: "/courses",
+        element: <Courses />,
+        errorElement: "<h3> Product error page </h3>",
+      },
+      {
         path: "/forgot-password",
         element: <Register />,
       },
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/register",
-        element: <Register />,
-      },
+
       {
         path: "/complete-registration",
         element: <CompleteRegistration />,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
   },
 ]);
 
