@@ -9,10 +9,10 @@ import {
   signInWithPopup,
   provider,
 } from "../../firebase";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AuthForm from "../../form/AuthForm";
 import Toast from "../../components/Toast";
-import AuthHeader from "./AuthHeader";
+import Header from "../../components/Header";
 
 const CREATE_USER = gql`
   mutation userCreate {
@@ -34,7 +34,7 @@ export default function Login() {
 
   const [loading, setLoading] = useState(false);
 
-  const { state, dispatch } = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -98,7 +98,7 @@ export default function Login() {
 
   return (
     <>
-      <AuthHeader />
+      <Header />
       <div className="container col-md-6">
         {loading ? <h4 className="text-danger">Loading...</h4> : <h4>Login</h4>}
 

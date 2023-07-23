@@ -2,11 +2,10 @@ import { auth, sendSignInLinkToEmail } from "../../firebase.js";
 import React, { useState } from "react";
 import AuthForm from "../../form/AuthForm";
 import Toast from "../../components/Toast.jsx";
-import AuthHeader from "./AuthHeader.jsx";
+import Header from "../../components/Header.jsx";
 
 export default function Register() {
   const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
 
   const [loading, setLoading] = useState(false);
 
@@ -38,7 +37,7 @@ export default function Register() {
 
   return (
     <>
-      <AuthHeader />
+      <Header />
       <div className="container col-md-6">
         {loading ? (
           <h4 className="text-danger">Loading...</h4>

@@ -41,21 +41,20 @@ function Header() {
           key={expand}
           collapseOnSelect
           expand={expand}
-          className="bg-body-tertiary me-auto  my-2 my-lg-0"
+          className="bg-body-tertiary me-auto my-2 my-md-0"
         >
           <Container fluid>
-            <Navbar.Brand href="#">MERN-GQL</Navbar.Brand>
-            <>
-              <Form className="d-flex mb-1">
-                <Form.Control
-                  type="search"
-                  placeholder="Search"
-                  className="me-1"
-                  aria-label="Search"
-                />
-                <Button variant="outline-success">Search</Button>
-              </Form>
-            </>
+            <Navbar.Brand href="/">MERN-GQL</Navbar.Brand>
+            <Form className="d-flex mb-1">
+              <Form.Control
+                type="search"
+                placeholder="Search"
+                className="me-1"
+                aria-label="Search"
+              />
+              <Button variant="outline-success">Search</Button>
+            </Form>
+
             {!user && (
               <>
                 <Nav.Link as={Link} to="/login">
@@ -81,37 +80,39 @@ function Header() {
                 />
               </>
             )}
-            <Navbar.Offcanvas
-              id={`offcanvasNavbar-expand-${expand}`}
-              aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
-              placement="end"
-            >
-              <Offcanvas.Header closeButton>
-                <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
-                  MERN-GQL
-                </Offcanvas.Title>
-              </Offcanvas.Header>
-              <Offcanvas.Body>
-                <Nav className="flex-grow-1 pe-3">
-                  <Nav.Link as={Link} to="/" className="d-flex">
-                    <i className="bi bi-house vertical-align: middle; margin:auto"></i>
-                    <span className="px-2">Home</span>
-                  </Nav.Link>
-                  <Nav.Link as={Link} to="/profile">
-                    <i className="bi bi-house vertical-align: middle; margin:auto"></i>
-                    <span className="px-2">Profile</span>
-                  </Nav.Link>
-                  <Nav.Link as={Link} to="/courses">
-                    <i className="bi bi-house vertical-align: middle; margin:auto"></i>
-                    <span className="px-2">Courses</span>
-                  </Nav.Link>
-                  <Nav.Link as={Link} to="/posts">
-                    <i className="bi bi-house vertical-align: middle; margin:auto"></i>
-                    <span className="px-2">Posts</span>
-                  </Nav.Link>
-                </Nav>
-              </Offcanvas.Body>
-            </Navbar.Offcanvas>
+            {user && (
+              <Navbar.Offcanvas
+                id={`offcanvasNavbar-expand-${expand}`}
+                aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
+                placement="end"
+              >
+                <Offcanvas.Header closeButton>
+                  <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
+                    MERN-GQL
+                  </Offcanvas.Title>
+                </Offcanvas.Header>
+                <Offcanvas.Body>
+                  <Nav className="flex-grow-1 pe-3">
+                    <Nav.Link as={Link} to="/" className="d-flex">
+                      <i className="bi bi-house vertical-align: middle; margin:auto"></i>
+                      <span className="px-2">Home</span>
+                    </Nav.Link>
+                    <Nav.Link as={Link} to="/profile">
+                      <i className="bi bi-house vertical-align: middle; margin:auto"></i>
+                      <span className="px-2">Profile</span>
+                    </Nav.Link>
+                    <Nav.Link as={Link} to="/courses">
+                      <i className="bi bi-house vertical-align: middle; margin:auto"></i>
+                      <span className="px-2">Courses</span>
+                    </Nav.Link>
+                    <Nav.Link as={Link} to="/posts">
+                      <i className="bi bi-house vertical-align: middle; margin:auto"></i>
+                      <span className="px-2">Posts</span>
+                    </Nav.Link>
+                  </Nav>
+                </Offcanvas.Body>
+              </Navbar.Offcanvas>
+            )}
           </Container>
         </Navbar>
       ))}
